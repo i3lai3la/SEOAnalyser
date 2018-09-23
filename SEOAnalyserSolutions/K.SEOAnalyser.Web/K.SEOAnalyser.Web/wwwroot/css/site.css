@@ -1,0 +1,29 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding:30px 15px 15px 15px;
+}
+
+/*Static footer*/
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: black;
+    color: white;
+    text-align: center;
+}
+
+.label-search{
+    font-size:6vw;
+}
+
+.font-style-bold_italic{
+    font-weight:bold;
+    font-style:italic;
+}
