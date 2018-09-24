@@ -21,6 +21,8 @@ namespace K.SEOAnalyser.Web.Services
 
         public List<string> FilterWordsByStopWords(List<string> contents)
         {
+            if (contents == null && contents.Count <= 0) return null;
+
             IEnumerable<Word> stopWords = GetsByWordType(WordType.STOPWORD);
             return contents.Where(c => !stopWords.Any(sw => sw.Value.Equals(c.ToLower()))).ToList();
         }

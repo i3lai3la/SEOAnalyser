@@ -4,46 +4,49 @@
     ViewData["Title"] = "Search";
 }
 
-<form id="form">
-    <div class="form-group">
-        <span class="col-md-12 col-sm-12 col-xs-12 text-center label-search">Search</span>
-        @Html.TextAreaFor(m => m.Value, new { Class = "form-control", placeholder = "Text in English or URL.", rows = 6 })
-        <small class="form-text text-muted">
-            <span class="glyphicon glyphicon-info-sign"></span> To search by URL, simply start the search value as following example
-            <span class="font-style-bold_italic">http://www.website.com</span>,
-            <span class="font-style-bold_italic">https://www.website.com</span>,
-            <span class="font-style-bold_italic">www.website.com</span> or
-            <span class="font-style-bold_italic">www.website.com/path/tosearch</span>
-        </small>
-    </div>
 
-    <div class="form-group">
-        <label class="checkbox-inline">
-            @Html.CheckBoxFor(m => m.IsFilterStopWordsOn)
-            Filters out stop-words
-        </label>
-        <label class="checkbox-inline">
-            @Html.CheckBoxFor(m => m.IsCalculateNumberOfWordOccurencesOn)
-            Number of word occurrences on Value or URL
-        </label>
-        <label class="checkbox-inline">
-            @Html.CheckBoxFor(m => m.IsCalculateNumberOfOccurencesInMetaTagOn)
-            Number of word occurrences in Meta Tags
-        </label>
-        <label class="checkbox-inline">
-            @Html.CheckBoxFor(m => m.IsCalculateNumberOfExternalLinkOn)
-            Number of external link on Search or URL
-        </label>
-    </div>
+<div class="row">
+    <form id="form">
+        <div class="form-group">
+            <span class="col-md-12 col-sm-12 col-xs-12 text-center label-search">Search</span>
+            @Html.TextAreaFor(m => m.Value, new { Class = "form-control", placeholder = "Text in English or URL.", rows = 6 })
+            <small class="form-text text-muted">
+                <span class="glyphicon glyphicon-info-sign"></span> To search by URL, simply start the search value as following example
+                <span class="font-style-bold_italic">http://www.website.com</span>,
+                <span class="font-style-bold_italic">https://www.website.com</span>,
+                <span class="font-style-bold_italic">www.website.com</span> or
+                <span class="font-style-bold_italic">www.website.com/path/tosearch</span>
+            </small>
+        </div>
 
-    <div class="col-md-12 col-sm-12 text-center">
-        <button type="submit" class="btn btn-primary btn-lg">Search</button>
-        <button type="reset" class="btn btn-warning btn-lg">Reset Search</button>
-    </div>
-    @Html.HiddenFor(s => s.ContentId)
-</form>
+        <div class="form-group">
+            <label class="checkbox-inline">
+                @Html.CheckBoxFor(m => m.IsFilterStopWordsOn)
+                Filters out stop-words
+            </label>
+            <label class="checkbox-inline">
+                @Html.CheckBoxFor(m => m.IsCalculateNumberOfWordOccurencesOn)
+                Number of word occurrences on Value or URL
+            </label>
+            <label class="checkbox-inline">
+                @Html.CheckBoxFor(m => m.IsCalculateNumberOfOccurencesInMetaTagOn)
+                Number of word occurrences in Meta Tags
+            </label>
+            <label class="checkbox-inline">
+                @Html.CheckBoxFor(m => m.IsCalculateNumberOfExternalLinkOn)
+                Number of external link on Search or URL
+            </label>
+        </div>
 
-<div class="col-md-12">
+        <div class="col-md-12 col-sm-12 text-center">
+            <button type="submit" class="btn btn-primary btn-lg">Search</button>
+            <button type="reset" class="btn btn-warning btn-lg">Reset Search</button>
+        </div>
+        @Html.HiddenFor(s => s.ContentId)
+    </form>
+</div>
+
+<div class="row">
     <div id="DivCalculateNumberOfWordOccurencesInPage">
     </div>
     <div id="DivCalculateNumberOfWordOccurencesInMetaTags">

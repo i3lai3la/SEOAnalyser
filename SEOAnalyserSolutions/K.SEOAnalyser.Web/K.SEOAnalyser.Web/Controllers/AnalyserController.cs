@@ -33,7 +33,7 @@ namespace K.SEOAnalyser.Web.Controllers
         public async Task<IActionResult> RegisterSearchValue(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
-                return BadRequest();
+                return BadRequest("Value provided is not valid.");
 
             InputValueType valueType = CommonFunctions.ValidateValueType(value);
             string allWordsInPage = null;
@@ -43,6 +43,10 @@ namespace K.SEOAnalyser.Web.Controllers
             switch (valueType)
             {
                 case InputValueType.URL:
+               
+                    if (!CommonFunctions.IsUrlResponses(value))
+                        return BadRequest("Unable to get response from URL given.");
+
                     url = value;
                     content = _contentService.GetByUrl(url);
                     if(content != null)
@@ -90,12 +94,12 @@ namespace K.SEOAnalyser.Web.Controllers
         public IActionResult GetNumberOfWordOccursOnValue(Guid contentId, bool isStopWordFilterOn)
         {
             if (contentId == null || contentId == Guid.Empty)
-                return BadRequest();
+                return BadRequest("Value provided is not valid.");
 
             Content content = _contentService.Get(contentId);
             
             if(content == null)
-                return BadRequest();
+                return BadRequest("Invalid data provided.");
 
             List<string> words = CommonFunctions.ExtractOnlyWords(content.Value);
         
@@ -112,12 +116,12 @@ namespace K.SEOAnalyser.Web.Controllers
         public IActionResult GetNumberOfWordOccursOnMetaTag(Guid contentId, bool isStopWordFilterOn)
         {
             if (contentId == null || contentId == Guid.Empty)
-                return BadRequest();
+                return BadRequest("Value provided is not valid.");
 
             Content content = _contentService.Get(contentId);
 
             if (content == null)
-                return BadRequest();
+                return BadRequest("Invalid data provided.");
 
             string allWords = CommonFunctions.GetStringInMetaTag(content.Value);
             List<string> words = CommonFunctions.ExtractOnlyWords(allWords);
@@ -135,12 +139,12 @@ namespace K.SEOAnalyser.Web.Controllers
         public IActionResult GetNumberOfExternalUrlOccursOnValue(Guid contentId)
         {
             if (contentId == null || contentId == Guid.Empty)
-                return BadRequest();
+                return BadRequest("Value provided is not valid.");
 
             Content content = _contentService.Get(contentId);
 
             if (content == null)
-                return BadRequest();
+                return BadRequest("Invalid data provided.");
 
             List<string> urls = CommonFunctions.ExtractUrlFromString(content.Value);
             IEnumerable<SearchResultModel> results = GroupByWords(urls);
@@ -151,6 +155,8 @@ namespace K.SEOAnalyser.Web.Controllers
 
         private IEnumerable<SearchResultModel> GroupByWords(List<string> words)
         {
+            if (words == null) return null;
+
            return words.GroupBy(w => w)
                 .Select(g => new SearchResultModel
                 {

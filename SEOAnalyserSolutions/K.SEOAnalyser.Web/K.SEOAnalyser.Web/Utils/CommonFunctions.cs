@@ -10,22 +10,15 @@ namespace K.SEOAnalyser.Web.Utils
 {
     public static class CommonFunctions
     {
-        const string REGEX_MATCH_URL = @"(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,})";
+        const string REGEX_MATCH_SINGLE_URL = @"^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$";
         const string REGEX_MATCH_WORD = @"[^\d\W]+";
         const string REGEX_MATCH_METATAG = @"<meta name=""(.+?)"" content=""(.+?)"">";
-        const string REGEX_MATCH_URL_IN_HREF = @"<a[^>]+href=""(.*?)""[^>]*>";
-
-
-
+        const string REGEX_MATCH_URL = @"\b(?:https?://|www\.)\S+\b";
+        
         public static bool IsValidUrl(string value)
         {
-            bool isValid = false;
-            Match m = Regex.Match(value, REGEX_MATCH_URL);
-
-            if (m.Success)
-                isValid = IsUrlResponses(value);
-
-            return isValid;
+            Match m = Regex.Match(value, REGEX_MATCH_SINGLE_URL);
+            return m.Success;
         }
 
         public static InputValueType ValidateValueType(string value)
@@ -83,10 +76,22 @@ namespace K.SEOAnalyser.Web.Utils
 
         public static List<string> ExtractUrlFromString(string contents)
         {
-            Regex urlTag = new Regex(REGEX_MATCH_URL_IN_HREF);
-            MatchCollection matchCollection = urlTag.Matches(contents);
+            List<string> urls = new List<string>();
 
-            return matchCollection.Where(m => !m.Groups[1].Value.Equals("#") && !m.Groups[1].Value.Equals("/")).Select(m => m.Groups[1].Value).ToList(); ;
+            if (!string.IsNullOrWhiteSpace(contents))
+            {
+                contents = contents.Replace("\">", " ");
+
+                Regex urlTag = new Regex(REGEX_MATCH_URL);
+                MatchCollection matchCollection = urlTag.Matches(contents);
+
+                if (matchCollection != null)
+                {
+                    urls = matchCollection.Select(s => s.Groups[0].Value).ToList();
+                }
+            }
+            
+            return urls;
         }
     }
 }

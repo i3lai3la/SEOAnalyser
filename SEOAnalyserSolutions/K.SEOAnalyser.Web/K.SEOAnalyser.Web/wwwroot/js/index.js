@@ -27,10 +27,10 @@
                     }
                     
                 } else {
-                    ajaxFailed();
+                    ajaxNoResult("unable to get value.");
                 }
-            }, error: function (data) {
-                ajaxFailed();
+            }, error: function (error) {
+                ajaxFailed(error);
             }
         });
     }
@@ -54,10 +54,10 @@
                     if (data) {
                         renderDataTables(data, "Calculate number of word occurences in page", divToappendId);
                     } else {
-                        ajaxFailed();
+                        ajaxNoResult("No result found for word occurences in page.");
                     }
-                }, error: function (data) {
-                    ajaxFailed();
+                }, error: function (error) {
+                    ajaxFailed(error);
                 }
             });
         } 
@@ -82,10 +82,10 @@
                     if (data) {
                         renderDataTables(data, "Calculate number of word occurences in Meta Tags", divToappendId);
                     } else {
-                        ajaxFailed();
+                        ajaxNoResult("No result found for word occurences in Meta Tags.");
                     }
-                }, error: function (data) {
-                    ajaxFailed();
+                }, error: function (error) {
+                    ajaxFailed(error);
                 }
             });
         }
@@ -109,10 +109,10 @@
                     if (data) {
                         renderDataTables(data, "Calculate number of urls occurences in Page", divToappendId);
                     } else {
-                        ajaxFailed();
+                        ajaxNoResult("No result found for number of urls occurences in page.");
                     }
-                }, error: function (data) {
-                    ajaxFailed();
+                }, error: function (error) {
+                    ajaxFailed(error);
                 }
             });
         }
@@ -137,7 +137,11 @@
     }
 
     function ajaxFailed(error) {
-        alert("Unable to get response from server.")
+        alert(error.responseText);
+    }
+
+    function ajaxNoResult(errorMsg) {
+        alert(errorMsg);
     }
 
     function resetAllGrid() {
