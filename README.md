@@ -17,6 +17,7 @@
 1. Download [.net core 2.0](https://www.microsoft.com/net/download/dotnet-core/2.0) framework and install.
 2. Once .net core 2.0 framework installed, you may run the solution.
 3. Solution currently run in memory instead of database, simply change it in appsettings.json "connectionstring" to point to database if required.
+4. To add/run unit test, import existing project and select "K.SEOAnalyser.Test.csproj' into solution.
 
 
  
